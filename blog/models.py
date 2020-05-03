@@ -5,8 +5,8 @@ from django.utils import timezone
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=250)
-    text = models.TextField()
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    text = models.TextField(verbose_name='Текст')
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
@@ -23,8 +23,8 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
-    author = models.CharField(max_length=250)
-    text = models.TextField()
+    author = models.CharField(max_length=250, verbose_name='Автор')
+    text = models.TextField(verbose_name='Текст')
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)
 
