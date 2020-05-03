@@ -8,33 +8,33 @@
             </div>
         {% else %}
 
-             <button type="button" class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}"><span class="badge badge-pill badge-success">Публиковать</span></button>
-             <button type="button" class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="badge badge-pill badge-danger">Удалить</span></button>
+             <button type="submit" class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}"><span class="badge badge-pill badge-success">Публиковать</span></button>
+             <button type="submit" class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="badge badge-pill badge-danger">Удалить</span></button>
 
         {% endif %}
         {% if user.is_authenticated %}
-            <button type="button" class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="badge badge-pill badge-primary">Редактировать</span></button>
+            <button type="submit" class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="badge badge-pill badge-primary">Редактировать</span></button>
         {% endif %}
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaksbr }}</p>
     </div>
 {% endblock %}
-<hr>
-<button type="button" class="btn btn-primary" href="{% url 'add_comment_to_post' pk=post.pk %}"> Комментировать <span class="badge badge-info"></span></button>
-{% for comment in post.comments.all %}
-    {% if user.is_authenticated or comment.approved_comment %}
-    <div class="comment">
-        <div class="date">
-            {{ comment.created_date }}
-            {% if not comment.approved_comment %}
-                <button type="button" class="btn btn-default" href="{% url 'comment_remove' pk=post.pk %}"><span class="badge badge-pill badge-danger">Удалить</span></button>
-                <button type="button" class="btn btn-default" href="{% url 'comment_approve' pk=post.pk %}"><span class="badge badge-pill badge-info">Добавить</span></button>
-            {% endif %}
-        </div>
-        <strong>{{ comment.author }}</strong>
-        <p>{{ comment.text|linebreaks }}</p>
-    </div>
-    {% endif %}
-{% empty %}
-    <p>Тут еще нет комментариев :(</p>
-{% endfor %}
+  <hr>
+  <button type="submit" class="btn btn-primary" href="{% url 'add_comment_to_post' pk=post.pk %}"><span class="badge badge-info">Комментировать</span></button>
+  {% for comment in post.comments.all %}
+      {% if user.is_authenticated or comment.approved_comment %}
+      <div class="comment">
+          <div class="date">
+              {{ comment.created_date }}
+              {% if not comment.approved_comment %}
+                  <button type="submit" class="btn btn-default" href="{% url 'comment_remove' pk=post.pk %}"><span class="badge badge-pill badge-danger">Удалить</span></button>
+                  <button type="submit" class="btn btn-default" href="{% url 'comment_approve' pk=post.pk %}"><span class="badge badge-pill badge-info">Добавить</span></button>
+              {% endif %}
+          </div>
+          <strong>{{ comment.author }}</strong>
+          <p>{{ comment.text|linebreaks }}</p>
+      </div>
+      {% endif %}
+  {% empty %}
+      <p>Тут еще нет комментариев :(</p>
+  {% endfor %}

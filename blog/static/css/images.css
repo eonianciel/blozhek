@@ -1,4 +1,4 @@
 body {
-    background: grey url("images/background.gif") no-repeat;
+    background: url('images/background.gif') no-repeat gray;
 
 }
