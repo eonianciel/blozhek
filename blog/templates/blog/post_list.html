@@ -8,7 +8,6 @@
             </div>
             <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
             <p>{{ post.text|linebreaksbr }}</p>
-            <h2><button type="submit" href="{% url 'post_detail' pk=post.pk %}" class="save btn btn-default"><span class="btn btn-dark">Комментарии: {{ post.approved_comments.count }}</span></button></h2>
-            <a href="{% url 'post_detail' pk=post.pk %}">Комментарии: {{ post.approved_comments.count }}</a>
+            <h2><a role="button" href="{% url 'add_comment_to_post' pk=post.pk %}" class="save btn btn-default"><span class="btn btn-dark">Комментарии: {{ post.approved_comments.count }}</span></a></h2>
     {% endfor %}
 {% endblock %}

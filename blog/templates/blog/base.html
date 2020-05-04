@@ -17,11 +17,11 @@
   <body>
     <div class="page-header">
         {% if user.is_authenticated %}
-            <button type="submit" class="btn btn-outline-success btn-sm" "top-menu" href="{% url 'post_new' %}">Новинка</button>
-            <button type="submit" class="btn btn-outline-info btn-sm" "top-menu" href="{% url 'post_draft_list' %}">Неопубликованные</button>
+            <a role="button" class="btn btn-outline-success btn-sm" "top-menu" href="{% url 'post_new' %}">Новинка</a>
+            <a role="button" class="btn btn-outline-info btn-sm" "top-menu" href="{% url 'post_draft_list' %}">Неопубликованные</a>
             <h3><p class="top-menu">Привет, {{ user.username }} <small>(<a href="{% url 'logout' %}">Выйти</a>)</small></p></h3>
         {% else %}
-            <a class="btn btn-outline-primary btn-lg" "top-menu" href="{% url 'login' %}">Войти</a>
+            <a role="button" class="btn btn-outline-primary btn-lg" "top-menu" href="{% url 'login' %}">Войти</a>
         {% endif %}
         <h1><a href="/">Mine Blog</a></h1>
     </div>
