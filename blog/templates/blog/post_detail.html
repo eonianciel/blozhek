@@ -9,7 +9,6 @@
         {% else %}
 
              <a role="button" class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}"><span class="badge badge-pill badge-success">Публиковать</span></a>
-             <a role="button" class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="badge badge-pill badge-danger">Удалить</span></a>
 
         {% endif %}
         {% if user.is_authenticated %}
