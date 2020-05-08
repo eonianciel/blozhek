@@ -19,8 +19,16 @@ h1 a {
     text-decoration: none;
 }
 
+.page-footer {
+    background: rgba(90, 60, 75, 0.5);
+    margin-bottom: 50px;
+    padding: 30px 30px 30px 100px;
+    border-radius: 40px;
+}
 .content {
     margin-left: 250px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 h1, h2, h3, h4 {
@@ -59,4 +67,15 @@ h1, h2, h3, h4 {
 .comment {
     margin: 20px 0px 20px 20px;
     float: right;
+}
+
+.card {
+    background: rgba(0, 0, 0, 0.05);
+    margin-bottom: 10px;
+    padding: 20px 10px 10px 70px;
+    border-radius: 40px;
+}
+
+.pagination {
+    margin-left: 300px;
 }

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/images.css' %}">
 
-    <title>Mega blog</title>
+    <title>Mine blog</title>
   </head>
   <body>
     <div class="page-header">
@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-md-8">
             {% block content %}
-
+              Увы, здесь еще ничего нет :(
             {% endblock %}
             {% if is_paginated %}
              <nav aria-label="...">
@@ -56,6 +56,10 @@
             {% endif %}
             </div>
         </div>
+    </div>
+
+    <div class="page-footer">
+        <h4>©by Eien, 2020</h4>
     </div>
 
     <!-- Optional JavaScript -->
