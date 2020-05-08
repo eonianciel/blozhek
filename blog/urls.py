@@ -14,4 +14,6 @@ urlpatterns = [
     path('post/<int:pk>/comment/', add_comment_to_post, name='add_comment_to_post'),
     path('comment/<int:pk>/approve/', comment_approve, name='comment_approve'),
     path('comment/<int:pk>/remove/', comment_remove, name='comment_remove'),
+    path('tags/', tags_list, name='tags_list_url'),
+    path('tag/<str:slug>', tag_detail, name='tags_detail_url'),
 ]

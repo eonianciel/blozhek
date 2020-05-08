@@ -2,17 +2,6 @@
 
 {% block content %}
     {% for post in page_object.object_list %}
-      <div class="card" style="width: 50rem;">
-        <div class="card-header">
-        {{ post.published_date }}
-        </div>
-        <div class="card-body">
-          <h1 class="card-title">{{ post.title }}</h1>
-          <p class="card-text">{{ post.text|truncatewords:20 }}</p>
-          <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-secondary">Далее</a>
-          <h2><a role="button" href="{% url 'add_comment_to_post' pk=post.pk %}" class="save btn btn-default">
-            <span class="btn btn-outline-dark">Комментарии: {{ post.approved_comments.count }}</span></a></h2>
-        </div>
-      </div>
+        {% include 'blog/includes/post_card_template.html'%}
     {% endfor %}
 {% endblock %}

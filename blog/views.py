@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from .models import Post, Comment
+from .models import Post, Comment, Tag
 from .forms import PostForm, CommentForm
 
 def post_list(request):
@@ -45,6 +45,14 @@ def post_list(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
+
+def tags_list(request):
+    tags = Tag.objects.all()
+    return render(request, 'blog/tags_list.html', context={'tags': tags})
+
+def tag_detail(request, slug):
+    tag = Tag.objects.get(slug__iexact=slug)
+    return render(request,'blog/tag_detail.html', context={'tag': tag})
 
 @login_required
 def post_new(request):
