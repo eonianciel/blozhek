@@ -2,9 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic import View
 
 from .models import Post, Comment, Tag
 from .forms import PostForm, CommentForm
+#from .utils import ObjectDetailMixin
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -42,17 +44,26 @@ def post_list(request):
         posts = paginator.page(paginator.num_pages)
     return render(request, 'blog/base.html', {'page': page, 'posts': posts})
 """
-def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+
+
+class PostDetail(View):
+#class PostDetail(ObjectDetailMixin, View):
+    #model = Post
+    #template = blog/post_detail.html'
+    def get(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        return render(request, 'blog/post_detail.html', {'post': post})
+
+
+class TagDetail(View):
+    def get(self, request, slug):
+        tag = get_object_or_404(slug__iexact=slug)
+        return render(request,'blog/tag_detail.html', context={'tag': tag})
+
 
 def tags_list(request):
     tags = Tag.objects.all()
     return render(request, 'blog/tags_list.html', context={'tags': tags})
-
-def tag_detail(request, slug):
-    tag = Tag.objects.get(slug__iexact=slug)
-    return render(request,'blog/tag_detail.html', context={'tag': tag})
 
 @login_required
 def post_new(request):
