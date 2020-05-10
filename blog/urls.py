@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from .views import*
+from .views import *
 
 urlpatterns = [
     path('', post_list, name='post_list'),
@@ -15,5 +15,7 @@ urlpatterns = [
     path('comment/<int:pk>/approve/', comment_approve, name='comment_approve'),
     path('comment/<int:pk>/remove/', comment_remove, name='comment_remove'),
     path('tags/', tags_list, name='tags_list_url'),
-    path('tag/<str:slug>', TagDetail.as_view(), name='tags_detail_url'),
+    path('tag/create', TagCreate.as_view(), name='tags_create_url'),
+    path('tag/<str:slug>/', TagDetail.as_view(), name='tags_detail_url'),
+    path('tag/<str:slug>/update/', TagUpdate.as_view(), name='tag_update_url'),
 ]

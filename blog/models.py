@@ -17,7 +17,7 @@ class Post(models.Model):
         self.save()
 
     def __str__(self):
-        return '{}'.format(self.title)
+        return self.title
 
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'pk': self.pk})
@@ -38,6 +38,9 @@ class Tag(models.Model):
 
     def get_absolute_url(self):
         return reverse('tags_detail_url', kwargs={'slug': self.slug})
+
+    def get_update_url(self):
+        return reverse('tag_update_url', kwargs={'slug': self.slug})
 
 
 class Comment(models.Model):

@@ -5,8 +5,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import View
 
 from .models import Post, Comment, Tag
-from .forms import PostForm, CommentForm
-#from .utils import ObjectDetailMixin
+from .forms import PostForm, CommentForm, TagForm
+from .utils import*
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -57,10 +57,30 @@ class PostDetail(View):
 
 class TagDetail(View):
     def get(self, request, slug):
-        tag = get_object_or_404(slug__iexact=slug)
+        tag = get_object_or_404(Tag, slug__iexact=slug)
         return render(request,'blog/tag_detail.html', context={'tag': tag})
 
 
+class TagCreate(View):
+    def get(self, request):
+        form = TagForm()
+        return render(request, 'blog/tag_create.html', context={'form': form})
+
+    def post(self, request):
+        bound_form = TagForm(request.POST)
+        if bound_form.is_valid():
+            new_tag = bound_form.save()
+            return redirect(new_tag)
+        return render(request, 'blog/tag_create.html', context={'form': bound_form})
+
+
+class TagUpdate(ObjectUpdateMixin, View):
+    model = Tag
+    model_form = TagForm
+    template = 'blog/tag_update_form.html'
+
+
+@login_required
 def tags_list(request):
     tags = Tag.objects.all()
     return render(request, 'blog/tags_list.html', context={'tags': tags})
