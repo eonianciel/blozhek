@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import View
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Post, Comment, Tag
 from .forms import PostForm, CommentForm, TagForm
@@ -17,40 +18,26 @@ def post_list(request):
 
     is_paginated = page.has_other_pages()
     if page.has_previous():
-        prev_url = '?page=()'.format(page.previous_page_number())
+        prev_url=f'?page={page.previous_page_number()}'
     else:
         prev_url = ''
 
     if page.has_next():
-        prev_url = '?page=()'.format(page.next_page_number())
+        next_url=f'?page={page.next_page_number()}'
     else:
-        prev_url = ''
+        next_url = ''
 
     context = {
         'page_object': page,
         'is_paginated': is_paginated,
-        'prev_url': prev_url
+        'prev_url': prev_url,
+        'next_url': next_url,
     }
 
     return render(request, 'blog/post_list.html', context=context)
-"""
-    object_list = Post.published.all()
-    paginator = Paginator(object_list, 3)
-    page = request.GET.get('page')
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-    return render(request, 'blog/base.html', {'page': page, 'posts': posts})
-"""
 
 
 class PostDetail(View):
-#class PostDetail(ObjectDetailMixin, View):
-    #model = Post
-    #template = blog/post_detail.html'
     def get(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
         return render(request, 'blog/post_detail.html', {'post': post})
@@ -75,17 +62,19 @@ class TagCreate(View):
         return render(request, 'blog/tag_create.html', context={'form': bound_form})
 
 
-class TagUpdate(ObjectUpdateMixin, View):
+class TagUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
     model = Tag
     model_form = TagForm
     template = 'blog/tag_update_form.html'
+    raise_exception = True
 
 
-class TagDelete(ObjectDeleteMixin, View):
+class TagDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     model = Tag
     template = 'blog/tag_delete_form.html'
     redirect_url = 'tags_list_url'
-    
+    raise_exception = True
+
 
 @login_required
 def tags_list(request):
