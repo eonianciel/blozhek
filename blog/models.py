@@ -30,8 +30,8 @@ class Post(models.Model):
 
 
 class Tag(models.Model):
-    title = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=50, unique=True)
+    title = models.CharField(max_length=50, verbose_name='Тэг')
+    slug = models.SlugField(max_length=50, unique=True, verbose_name='Слаг')
 
     def __str__(self):
         return '{}'.format(self.title)

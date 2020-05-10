@@ -1,0 +1,17 @@
+{% if user.is_authenticated or comment.approved_comment %}
+    <div class="card" style="width: 40rem;">
+      <div class="card-header">
+      {{ comment.created_date }}
+      {% if not comment.approved_comment %}
+          <a role="button" class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">
+            <span class="badge badge-pill badge-success">+</span></a>
+          <a role="button" class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}">
+            <span class="badge badge-pill badge-danger">-</span></a>
+      {% endif %}
+      </div>
+      <div class="card-body">
+        <b><h3 class="card-title">{{ comment.author }}</h3></b>
+        <p class="card-text">{{ comment.text|linebreaks }}</p>
+      </div>
+    </div>
+{% endif %}
