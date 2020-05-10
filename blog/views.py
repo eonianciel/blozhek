@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import View
+from django.urls import reverse
 
 from .models import Post, Comment, Tag
 from .forms import PostForm, CommentForm, TagForm
@@ -79,6 +80,12 @@ class TagUpdate(ObjectUpdateMixin, View):
     model_form = TagForm
     template = 'blog/tag_update_form.html'
 
+
+class TagDelete(ObjectDeleteMixin, View):
+    model = Tag
+    template = 'blog/tag_delete_form.html'
+    redirect_url = 'tags_list_url'
+    
 
 @login_required
 def tags_list(request):

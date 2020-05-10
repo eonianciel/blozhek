@@ -42,6 +42,9 @@ class Tag(models.Model):
     def get_update_url(self):
         return reverse('tag_update_url', kwargs={'slug': self.slug})
 
+    def get_delete_url(self):
+        return reverse('tag_delete_url', kwargs={'slug': self.slug})
+
 
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
