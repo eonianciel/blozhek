@@ -19,4 +19,5 @@ urlpatterns = [
     path('tag/<str:slug>/', TagDetail.as_view(), name='tags_detail_url'),
     path('tag/<str:slug>/update/', TagUpdate.as_view(), name='tag_update_url'),
     path('tag/<str:slug>/delete/', TagDelete.as_view(), name='tag_delete_url'),
+    path('<int:pk>/share/', SharePost.as_view(), name='post_share')
 ]

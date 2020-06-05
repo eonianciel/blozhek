@@ -1,4 +1,5 @@
 body {
     background: url('images/background.gif') no-repeat;
-
+    background-attachment: fixed;
+    background-size: 100%;
 }

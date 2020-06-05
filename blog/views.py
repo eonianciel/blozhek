@@ -5,9 +5,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import View
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 
 from .models import Post, Comment, Tag
-from .forms import PostForm, CommentForm, TagForm
+from .forms import PostForm, CommentForm, TagForm, EmailPostForm
 from .utils import*
 
 def post_list(request):
@@ -149,3 +150,26 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
+
+class SharePost(View):
+    def get(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        sent = False
+        form = EmailPostForm()
+        return render(request, 'blog/post_share.html',
+         {'post': post, 'form': form, 'sent': sent})
+
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        form = EmailPostForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            post_url = request.build_absolute_uri(post.get_absolute_url())
+            subject = '{} ({}) рекомендует прочитать "{}"'.format(cd['name'],
+            cd['email'], post.title)
+            message = 'Прочитайте "{}", ссылка {}.\n\nКомментарий: {}'.format(post.title,
+             post_url, cd['name'], cd['comments'])
+            send_mail(subject, message, 'admin@blog.com', [cd['to']])
+            sent = True
+            return render(request, 'blog/post_share.html',
+             {'post': post, 'form': form, 'sent': sent})

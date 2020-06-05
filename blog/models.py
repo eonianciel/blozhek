@@ -2,15 +2,24 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.shortcuts import reverse
+from django.utils.text import slugify
+from time import time
 
+
+def gen_slug(s):
+    new_slug = slugify(s, allow_unicode=True)
+    return new_slug + '-' + str(int(time()))
 
 class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=250, db_index=True, verbose_name='Заголовок')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
+     on_delete=models.CASCADE)
+    title = models.CharField(max_length=250, db_index=True,
+     verbose_name='Заголовок')
     text = models.TextField(blank=True, db_index=True, verbose_name='Текст')
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
+    tags = models.ManyToManyField('Tag', blank=True,
+     related_name='posts', verbose_name='Тэги')
 
     def publish(self):
         self.published_date = timezone.now()
@@ -31,7 +40,13 @@ class Post(models.Model):
 
 class Tag(models.Model):
     title = models.CharField(max_length=50, verbose_name='Тэг')
-    slug = models.SlugField(max_length=50, unique=True, verbose_name='Слаг')
+    slug = models.SlugField(max_length=50, blank=True, unique=True,
+     verbose_name='Слаг')
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug = gen_slug(self.title)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return '{}'.format(self.title)
@@ -47,7 +62,8 @@ class Tag(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE,
+     related_name='comments')
     author = models.CharField(max_length=250, verbose_name='Автор')
     text = models.TextField(verbose_name='Текст')
     created_date = models.DateTimeField(default=timezone.now)

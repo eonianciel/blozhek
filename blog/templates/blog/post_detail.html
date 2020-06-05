@@ -17,6 +17,7 @@
         {% endif %}
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaksbr }}</p>
+        <p><a href="{% url 'post_share' post.pk %}">Поделиться статьей</a></p>
     </div>
 
   <hr>

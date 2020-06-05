@@ -16,7 +16,6 @@ class PostForm(forms.ModelForm):
         }
 
 
-
 class TagForm(forms.ModelForm):
     class Meta:
         model = Tag
@@ -40,3 +39,10 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('author', 'text',)
+
+
+class EmailPostForm(forms.Form):
+    name = forms.CharField(max_length=150, label='От кого')
+    email = forms.EmailField(label='E-mail')
+    to = forms.EmailField(label='Кому')
+    comments = forms.CharField(required=False, widget=forms.Textarea, label='Комментарий')
