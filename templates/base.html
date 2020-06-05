@@ -20,6 +20,7 @@
             <a role="button" class="btn btn-outline-success btn-sm" "top-menu" href="{% url 'post_new' %}">Новинка</a>
             <a role="button" class="btn btn-outline-info btn-sm" "top-menu" href="{% url 'post_draft_list' %}">Неопубликованные</a>
             <a role="button" class="btn btn-outline-secondary btn-sm" "top-menu" href="{% url 'tags_list_url' %}">Тэги</a>
+            <a role="button" class="btn btn-outline-warning btn-sm" "top-menu" href="{% url 'social_dashboard' %}">Рабочий стол</a>
             <h3><p class="top-menu">Привет, {{ user.username }} <small>(<a href="{% url 'logout' %}">Выйти</a>)</small></p></h3>
         {% else %}
             <a role="button" class="btn btn-outline-primary btn-lg" "top-menu" href="{% url 'login' %}">Войти</a>
