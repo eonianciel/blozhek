@@ -133,3 +133,6 @@ EMAIL_HOST_PASSWORD = 'jndfo08&&hsdj'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
