@@ -7,8 +7,8 @@ from .views import*
 urlpatterns = [
     path('login/', UserLogin.as_view(), name='social_login'),
     path('dashboard/', social_dashboard, name='social_dashboard'),
-    path('accounts/login/', views.LoginView.as_view(), name='login'),
-    path('accounts/logout/', views.LogoutView.as_view(next_page='/'),
+    path('socials/login/', views.LoginView.as_view(), name='login'),
+    path('socials/logout/', views.LogoutView.as_view(next_page='/'),
      name='logout'),
     path('password_change/', views.PasswordChangeView.as_view(),
      name='password_change'),
@@ -25,4 +25,6 @@ urlpatterns = [
     #path('', include('django.contrib.auth.urls')),
     path('registration/', UserRegistration.as_view(), name='user_registration'),
     path('update/', UpdateUserProfile.as_view(), name='update_user_profile'),
+    #path('registration/', register, name='user_registration'),
+    #path('update/', edit, name='update_user_profile'),
 ]

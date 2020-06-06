@@ -102,6 +102,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.google.GoogleOAuth2',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -136,3 +140,6 @@ EMAIL_USE_SSL = False
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '*' # Google Consumer Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '*' # Google Consumer Secret
